@@ -11,9 +11,8 @@ import numpy as np
 # ここではサンプルデータを使用しています
 
 # サンプルデータ
-time = ['1:00', '2:30', '4:00', '5:30', '7:00', '8:30', '10:00', '11:30', '13:00', '14:30', '16:00', '17:30', '19:00', '20:30', '22:00', '23:30']
-heartbeat = [80, 85, 70, 75, 90, 95, 100, 110, 105, 98, 100, 90, 95, 85, 87, 120]
-respiration = [20, 22, 19, 18, 21, 23, 22, 24, 20, 19, 21, 18, 19, 17, 19, 25]
+time = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+heartbeat = [80, 85, 70, 75, 90, 95, 100, 110, 105]
 
 app1 = DjangoDash('WorldMap', external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -88,159 +87,17 @@ app1.layout = html.Div(
     ]
 )
 
-# サンプルデータの作成（アプリケーション2用）
-dates = pd.date_range(start="2024-08-18", end="2024-08-23", freq="D")
-data = {
-    "Date": np.repeat(dates, 50),
-    "Value": np.random.randint(65, 100, size=50 * len(dates)),
-}
-df = pd.DataFrame(data)
-
-# アプリケーション2: Health
-app2 = DjangoDash('Health', external_stylesheets=[dbc.themes.BOOTSTRAP])
-app2.layout = html.Div([
-    dcc.Graph(id="box-plot",config={"displayModeBar": False}),
-    dcc.DatePickerRange(
-        id="date-picker",
-        start_date=df["Date"].min(),
-        end_date=df["Date"].max(),
-        display_format="YYYY-MM-DD",
-    )
-])
-
-@app2.callback(
-    Output("box-plot", "figure"),
-    [Input("date-picker", "start_date"),
-     Input("date-picker", "end_date")]
-)
-def update_box_plot(start_date, end_date):
-    # 日付フィルタリング
-    filtered_df = df[(df["Date"] >= start_date) & (df["Date"] <= end_date)]
-    # Box Plotの作成
-    fig = px.box(filtered_df, x="Date", y="Value")
-    fig.update_layout(transition_duration=500)
-    return fig
-
-# サンプルデータの作成（アプリケーション3用）
-dates = pd.date_range(start="2024-09-01", end="2024-09-30", freq="D")
-sleep_time = np.random.randint(5, 10, len(dates))  # 睡眠時間のランダムデータ
-active_time = 24 - sleep_time  # 活動時間（24時間 - 睡眠時間）
-
-df_sleep = pd.DataFrame({
-    "Date": dates,
-    "睡眠時間": sleep_time,
-    "活動時間": active_time,
-})
-
-# アプリケーション3: Sleep
-app3 = DjangoDash('Sleep', external_stylesheets=[dbc.themes.BOOTSTRAP])
-app3.layout = html.Div([
-    dcc.Graph(id="area-chart",config={"displayModeBar": False}),
-    dcc.DatePickerRange(
-        id="date-picker",
-        start_date=df_sleep["Date"].min(),
-        end_date=df_sleep["Date"].max(),
-        display_format="YYYY-MM-DD",
-        start_date_placeholder_text="開始日を選択",
-        end_date_placeholder_text="終了日を選択",
-    )
-])
-
-@app3.callback(
-    Output("area-chart", "figure"),
-    [Input("date-picker", "start_date"),
-     Input("date-picker", "end_date")]
-)
-def update_area_chart(start_date, end_date):
-    # 日付範囲でデータをフィルタリング
-    filtered_df = df_sleep[(df_sleep["Date"] >= start_date) & (df_sleep["Date"] <= end_date)]
-
-    # エリアチャートの作成
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(
-        x=filtered_df["Date"],
-        y=filtered_df["睡眠時間"],
-        mode='lines',
-        name='睡眠時間',
-        stackgroup='one',
-        line=dict(color='skyblue')
-    ))
-    fig.add_trace(go.Scatter(
-        x=filtered_df["Date"],
-        y=filtered_df["活動時間"],
-        mode='lines',
-        name='活動時間',
-        stackgroup='one',
-        line=dict(color='orange')
-    ))
-    fig.update_layout(
-        xaxis_title="日付",
-        yaxis_title="時間（時間）",
-            legend=dict(
-        orientation="h",  # 水平表示に設定
-        yanchor="bottom",  # 凡例の垂直位置の基準を下に設定
-        y=1.1,  # グラフの上部より少し上に配置
-        xanchor="center",  # 凡例の水平位置の基準を中央に設定
-        x=0.5  # グラフの中央に配置
-    ),
-        yaxis=dict(range=[0, 24])
-    )
-    return fig
-
-# サンプルデータ作成
-sleep_week_data = {
-    "曜日": ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日", "日曜日"] * 6,
-    "週": ["1w"] * 7 + ["2w"] * 7 + ["3w"] * 7 + ["4w"] * 7 + ["5w"] * 7 + ["6w"] * 7,
-    "値": [
-        1, 3, 5, 7, 2, 4, 6,
-        2, 6, 4, 3, 5, 7, 8,
-        4, 5, 6, 3, 8, 2, 7,
-        6, 8, 2, 5, 7, 4, 3,
-        7, 2, 8, 4, 6, 3, 5,
-        3, 4, 6, 8, 2, 5, 7,
-    ],
-}
-
-sleep_week_df = pd.DataFrame(sleep_week_data)
-
-# DjangoDashアプリケーションの作成
-app4 = DjangoDash('SleepWeekly', external_stylesheets=[dbc.themes.BOOTSTRAP])
-
-# ピボットテーブルでデータを整形
-sleep_week_heatmap_data = sleep_week_df.pivot(index="週", columns="曜日", values="値")
-
-# ヒートマップの作成
-fig = go.Figure(
-    data=go.Heatmap(
-        z=sleep_week_heatmap_data.values,
-        x=sleep_week_heatmap_data.columns,
-        y=sleep_week_heatmap_data.index,
-        colorscale="Blues",  # カラースケールを指定
-        colorbar=dict(title="値")
-    )
-)
-
-# グラフのレイアウトを調整
-fig.update_layout(
-    xaxis=dict(title="曜日"),
-    yaxis=dict(title="週", autorange="reversed"),  # "1w" が上に来るように反転
-)
-
-# Dashアプリケーションのレイアウト
-app4.layout = html.Div([
-    dcc.Graph(figure=fig)
-])
-
-def make_ring_figure(value: int, color="#1f77b4", rest_color="#9bd5d6"):
+def make_ring_figure_blue(value: int, color="#1d4ed8", rest_color="#7ec8d6"):
     value = max(0, min(100, int(value)))
+
     fig = go.Figure(
         data=[
             go.Pie(
                 values=[value, 100 - value],
-                hole=0.82,  # リングの太さ（大きいほど細くなる）
+                hole=0.86,                 # リング細め（画像寄せ）
                 sort=False,
                 direction="clockwise",
-                rotation=90,  # 12時開始
+                rotation=270,              # 下あたり始点っぽく
                 textinfo="none",
                 hoverinfo="skip",
                 marker=dict(
@@ -256,19 +113,18 @@ def make_ring_figure(value: int, color="#1f77b4", rest_color="#9bd5d6"):
         margin=dict(l=0, r=0, t=0, b=0),
         paper_bgcolor="white",
         plot_bgcolor="white",
-        height=220,
+        # autosize=True,
         annotations=[
             dict(
                 text=f"<b>{value}%</b>",
                 x=0.5, y=0.5,
                 showarrow=False,
-                font=dict(size=40, color="#111827"),
+                font=dict(size=36, color="#111827"),
             )
         ],
     )
     return fig
 
-# アプリ（例）
 app5 = DjangoDash("InnovationGauge", external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 app5.layout = html.Div(
@@ -276,22 +132,18 @@ app5.layout = html.Div(
         dcc.Graph(
             id="innovation-gauge",
             config={"displayModeBar": False},
-            figure=make_ring_figure(91),
-            style={"height": "140px"},
-        ),
-        html.Div(
-            "INNOVATION",
-            style={
-                "textAlign": "center",
-                "fontWeight": "600",
-                "letterSpacing": "0.06em",
-                "marginTop": "-6px",
-            },
+            figure=make_ring_figure_blue(91),
+            style={"width": "100%", "height": "120px"},
         ),
     ],
-    style={"width": "200px", "background": "white"},
+    style={
+        "width": "100%", 
+        "height": "100%",
+        "background": "white",
+        "display": "grid",
+        "placeItems": "center",
+    },
 )
-
 
 def make_ring_figure(value: int, color="#f59e0b", rest_color="#fde68a"):
     value = max(0, min(100, int(value)))
@@ -319,14 +171,13 @@ def make_ring_figure(value: int, color="#f59e0b", rest_color="#fde68a"):
         margin=dict(l=0, r=0, t=0, b=0),
         paper_bgcolor="white",
         plot_bgcolor="white",
-        height=160,
-        width=200,
+        # autosize=True,
         annotations=[
             dict(
                 text=f"<b>{value}%</b>",
                 x=0.5, y=0.5,
                 showarrow=False,
-                font=dict(size=44, color="#111827"),
+                font=dict(size=36, color="#111827"),
             )
         ],
     )
@@ -340,11 +191,72 @@ app7.layout = html.Div(
             id="innovation-gauge",
             config={"displayModeBar": False},
             figure=make_ring_figure(75),     # ← 画像は 75%
-            style={"height": "160px"},
+            style={"width": "100%", "height": "120px"},
         ),
     ],
     style={
-        "width": "200px",
+        "width": "100%", 
+        "height": "100%",
+        "background": "white",
+        "display": "grid",
+        "placeItems": "center",
+    },
+)
+
+import plotly.graph_objects as go
+
+def make_ring_figure_green(value: int, color="#16a34a", rest_color="#9bd5d6"):
+    value = max(0, min(100, int(value)))
+
+    fig = go.Figure(
+        data=[
+            go.Pie(
+                values=[value, 100 - value],
+                hole=0.86,                 # リング細め（画像寄せ）
+                sort=False,
+                direction="clockwise",
+                rotation=270,              # 下あたり始点っぽく
+                textinfo="none",
+                hoverinfo="skip",
+                marker=dict(
+                    colors=[color, rest_color],
+                    line=dict(color="white", width=2),
+                ),
+                showlegend=False,
+            )
+        ]
+    )
+
+    fig.update_layout(
+        margin=dict(l=0, r=0, t=0, b=0),
+        paper_bgcolor="white",
+        plot_bgcolor="white",
+        # autosize=True,
+        annotations=[
+            dict(
+                text=f"<b>{value}%</b>",
+                x=0.5, y=0.5,
+                showarrow=False,
+                font=dict(size=36, color="#111827"),
+            )
+        ],
+    )
+    return fig
+
+app8 = DjangoDash("CustomerGauge", external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+app8.layout = html.Div(
+    children=[
+        dcc.Graph(
+            id="customer-gauge",
+            config={"displayModeBar": False},
+            figure=make_ring_figure_green(88),
+            style={"width": "100%", "height": "120px"},
+        ),
+    ],
+    style={
+        "width": "100%", 
+        "height": "100%",
         "background": "white",
         "display": "grid",
         "placeItems": "center",
@@ -363,7 +275,7 @@ from dash.dependencies import Input, Output
 from wordcloud import WordCloud
 
 
-def wordcloud_png_base64(freq: dict, width=900, height=320) -> str:
+def wordcloud_png_base64(freq: dict, width=900, height=600) -> str:
     """
     freq: {"PROACTIVE": 50, "COLLABORATION": 40, ...} のような頻度辞書
     return: data URI に使える base64 文字列
@@ -396,7 +308,7 @@ app_wc.layout = html.Div(
             id="wc-image",
             style={
                 "width": "100%",
-                "height": "auto",
+                "height": "100%",
                 "display": "block",
                 "borderRadius": "12px",
             },

@@ -293,7 +293,7 @@
         letter-spacing: 0.6px;
         text-transform: uppercase;
         opacity: 0.9;
-        margin-top: -6px;
+        margin-top: -40px;
       }
 
       /* Right column stacking */
@@ -508,6 +508,9 @@
         .dash__main {
           padding: 16px;
         }
+        .grid {
+          grid-template-columns: 1fr;
+        }
         .rightCol {
           grid-template-rows: auto;
         }
@@ -528,6 +531,82 @@
           width: 160px;
           height: 160px;
         }
+        .kpi__label {
+          margin-top: -6px;
+        }
+      }
+      /* 900pxくらいまでは “3つ横” を維持（リングが縮めばOK） */
+      @media (max-width: 1020px) {
+        .kpis {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .embed--ring {
+          width: 150px;
+          height: 150px;
+        }
+      }
+
+      /* さらに狭い（例：600px以下）なら2列に落とす */
+      @media (max-width: 600px) {
+        .kpis {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .embed--ring {
+          width: 140px;
+          height: 140px;
+        }
+      }
+
+      /* もっと狭い（例：420px以下）だけ縦1列にする */
+      @media (max-width: 420px) {
+        .kpis {
+          grid-template-columns: 1fr;
+        }
+        .embed--ring {
+          width: 160px;
+          height: 160px;
+        }
+      }
+      /* KPIリング：3等分で等間隔＋中央揃え（このブロックだけのつもりで .kpis に限定） */
+      .kpis {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 12px !important;
+        justify-items: center !important; /* 各カラムの中で中央に */
+        align-items: start !important;
+      }
+
+      .kpis .kpi {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        min-width: 0;
+      }
+
+      /* リング枠のサイズを“全て同じ”に固定 */
+      .kpis .embed--ring {
+        width: 180px !important;
+        height: 180px !important;
+        position: relative;
+      }
+
+      /* ラベルも同じ幅で中央揃え（リング中心と一致させる） */
+      .kpis .kpi__label {
+        width: 180px !important;
+        text-align: center !important;
+        margin-top: -40px;
+      }
+
+      /* iframe / div を枠いっぱいに（ズレ防止のコア） */
+      .kpis .embed--ring iframe,
+      .kpis .embed--ring .django-plotly-dash,
+      .kpis .embed--ring .dash-graph,
+      .kpis .embed--ring .dash-graph > div,
+      .kpis .embed--ring .js-plotly-plot {
+        width: 100% !important;
+        height: 100% !important;
+        display: block;
+        border: 0;
       }
     </style>
   </body>

@@ -1,0 +1,198 @@
+{% extends "base.html" %} {% load plotly_dash %} {% block content %}
+
+<div class="dash">
+  <!-- Sidebar -->
+  <aside class="dash__sidebar">
+    <div class="brand">
+      <div class="brand__mark" aria-hidden="true"></div>
+      <div class="brand__text">
+        <div class="brand__name">ism AI</div>
+        <div class="brand__sub">Dashboard</div>
+      </div>
+    </div>
+
+    <nav class="snav">
+      <a class="snav__item is-active" href="#"
+        ><span class="snav__icon">🏠</span>Dashboard</a
+      >
+      <a class="snav__item" href="#"
+        ><span class="snav__icon">👥</span>Employees</a
+      >
+      <a class="snav__item" href="#"
+        ><span class="snav__icon">📄</span>Reports</a
+      >
+      <a class="snav__item" href="#"
+        ><span class="snav__icon">📊</span>Rankings</a
+      >
+      <div class="snav__spacer"></div>
+      <a class="snav__item" href="#"
+        ><span class="snav__icon">⚙️</span>Settings</a
+      >
+      <a class="snav__item" href="#"><span class="snav__icon">🛡️</span>Admin</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="dash__main">
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar__title">
+        <span>VISIONRT</span><span class="topbar__sep">–</span
+        ><span>AI FEEDBACK</span>
+      </div>
+      <div class="topbar__actions">
+        <div class="pill">ism AI</div>
+        <button class="hamburger" type="button" aria-label="Menu">☰</button>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="container">
+      <section class="grid">
+        <!-- Left big card -->
+        <article class="card card--big">
+          <div class="card__head">
+            <h3>OVERALL ISHIZUKE SCORE</h3>
+          </div>
+
+          <div class="card__body">
+            <div class="scoreRow">
+              <div class="scoreRow__text">
+                Submitted daily report. Finished task A, started B.<br />
+                Had a 4h meeting with Itachi and design team.
+              </div>
+              <div class="scoreRow__badge">82%</div>
+            </div>
+
+            <!-- Line chart -->
+            <div class="panel panel--chart">
+              <div class="embed embed--line">
+                {% plotly_app name="WorldMap" ratio=0.42 %}
+              </div>
+              <div class="axisLabel">% LAST 6 MONTHS</div>
+            </div>
+
+            <!-- KPI rings -->
+            <div class="kpis">
+              <div class="kpi">
+                <div class="embed embed--ring">
+                  {% plotly_app name="InnovationGauge" ratio=1.0 %}
+                </div>
+                <div class="kpi__label">INNOVATION</div>
+              </div>
+
+              <div class="kpi">
+                <div class="embed embed--ring">
+                  {% plotly_app name="InnovationGauge" ratio=1.0 %}
+                </div>
+                <div class="kpi__label">CUSTOMER FIRST</div>
+              </div>
+
+              <div class="kpi">
+                <div class="embed embed--ring">
+                  {% plotly_app name="InnovationGauge" ratio=1.0 %}
+                </div>
+                <div class="kpi__label">EXECUTION SPEED</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Right column -->
+        <div class="rightCol">
+          <!-- Top aligned employees -->
+          <article class="card">
+            <div class="card__head">
+              <h3>TOP ALIGNED EMPLOYEES</h3>
+            </div>
+            <div class="card__body">
+              <div class="people">
+                <div class="person">
+                  <div class="person__left">
+                    <div class="avatar"></div>
+                    <div class="meta">
+                      <div class="meta__name">Hiroshi Tanaka</div>
+                      <div class="meta__sub">General Manager</div>
+                    </div>
+                  </div>
+                  <div class="person__right">
+                    <div class="pct">95%</div>
+                    <div class="tag tag--orange">MVP</div>
+                  </div>
+                </div>
+
+                <div class="person">
+                  <div class="person__left">
+                    <div class="avatar avatar--green"></div>
+                    <div class="meta">
+                      <div class="meta__name">Kanji Sato</div>
+                      <div class="meta__sub">Team Lead</div>
+                    </div>
+                  </div>
+                  <div class="person__right">
+                    <div class="pct">89%</div>
+                    <div class="tag tag--blue">NVP</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Wordcloud -->
+          <article class="card">
+            <div class="card__head">
+              <h3>REAL-TIME FEEDBACK TRENDS</h3>
+            </div>
+            <div class="card__body">
+              <div class="panel panel--cloud">
+                <div class="embed embed--cloud">
+                  {% plotly_app name="FeedbackWordCloud" ratio=0.32 %}
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Advice (full width) -->
+      <section class="advice">
+        <div class="advice__inner">
+          <div class="advice__title">ISM AI - INSTANT ADVICE</div>
+
+          <div class="adviceBox">
+            <div class="ceo">
+              <div class="ceo__avatar"></div>
+              <div class="ceo__name">CEO HIROSHI AI</div>
+            </div>
+
+            <div class="adviceMain">
+              <div class="jp">
+                <div class="jp__lead">目標意識、素晴らしい！</div>
+                <div class="jp__text">
+                  今日の行動は「継続」と「改善」がしっかり見えています。<br />
+                  次回は、デザインチームとの合意形成で
+                  <b>論点を1つに絞って</b> 進めるとさらにスムーズです。<br />
+                  小さく早く回して、次の打ち手につなげましょう！
+                </div>
+
+                <div class="progressRow" aria-label="Score progress">
+                  <span class="flame">🔥</span>
+                  <div class="embed embed--progress">
+                    {% plotly_app name="ProgressBar" ratio=0.08 %}
+                  </div>
+                  <span class="flame">🔥</span>
+                </div>
+              </div>
+
+              <div class="cta">
+                <button class="btn" type="button">UNDERSTOOD!</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+{% endblock %}

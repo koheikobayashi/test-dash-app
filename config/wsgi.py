@@ -14,3 +14,6 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
 application = get_wsgi_application()
+
+# ★ Dashアプリ登録（本番の gunicorn worker 起動時に必ず実行される）
+import worldmap.worldmap  # noqa: F401

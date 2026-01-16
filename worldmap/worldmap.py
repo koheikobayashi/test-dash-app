@@ -298,7 +298,7 @@ def wordcloud_png_base64(freq: dict, width=900, height=520) -> str:
     return f"data:image/png;base64,{b64}"
 
 
-app_wc = DjangoDash("FeedbackWordCloud")
+app_wc = DjangoDash("FeedbackWordCloud",serve_locally=False)
 
 app_wc.layout = html.Div(
     [
@@ -386,7 +386,7 @@ def progress_bar(percent: int):
         style={"display": "flex", "alignItems": "center", "gap": "16px", "width": "100%"},
     )
 
-app6 = DjangoDash("ProgressBar", external_stylesheets=[dbc.themes.BOOTSTRAP])
+app6 = DjangoDash("ProgressBar", external_stylesheets=[dbc.themes.BOOTSTRAP],serve_locally=False)
 
 app6.layout = html.Div([progress_bar(85)], style={"maxWidth":"900px"})
 

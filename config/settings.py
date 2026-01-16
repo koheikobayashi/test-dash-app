@@ -102,3 +102,7 @@ LOGGING = {
 }
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
+
+PLOTLY_DASH = {
+    "serve_locally": False,
+}

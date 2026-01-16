@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'channels_redis', # django_plotly_dashにて追加
     'bootstrap4', # django-bootstrap4を利用する場合
     'worldmap.apps.WorldmapConfig' # 通常のdjangoアプリ設定に伴う追加
+    "dpd_static_support",
 ]
 
 MIDDLEWARE = [

@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-insecure-secret")
 
 # Render では RENDER=true が入ることが多いので、それを前提にする
-DEBUG = True
+DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
 
 # Host
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".onrender.com"]

@@ -44,3 +44,4 @@ Werkzeug==3.0.6
 zipp==3.21.0
 gunicorn
 whitenoise[brotli]
+wordclowd

@@ -51,8 +51,8 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [str(BASE_DIR / "worldmap" / "templates")],
-        "APP_DIRS": True,
+        "DIRS": [BASE_DIR / "templates"],  # ★これが必須（base.html を拾う）
+        "APP_DIRS": True,                  # ★worldmap/templates/... も拾う
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",

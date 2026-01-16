@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-insecure-secret")
 
 # Render では RENDER=true が入ることが多いので、それを前提にする
-DEBUG = os.environ.get("RENDER") is None  # ローカル=True / Render=False
+DEBUG = True
 
 # Host
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".onrender.com"]
@@ -85,3 +85,16 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
+    "loggers": {
+        "django.request": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+    },
+}

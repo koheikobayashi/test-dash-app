@@ -73,7 +73,10 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
-# 静的ファイルの設定
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_URL = "/static/"
+
+# collectstatic 用の出力先（常に設定）
+STATIC_ROOT = str(BASE_DIR / "staticfiles")
+
+# WhiteNoise を使うなら（そのままでOK）
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

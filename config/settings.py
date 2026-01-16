@@ -29,8 +29,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_plotly_dash.apps.DjangoPlotlyDashConfig",
+    "dpd_static_support",
     # worldmap が Django app なら有効化（apps.py があるなら入れる）
-    # "worldmap",
+    "worldmap",
 ]
 
 MIDDLEWARE = [

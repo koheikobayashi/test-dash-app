@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-insecure-secret")
 
 # Render上では DEBUG=False
-DEBUG = os.environ.get("RENDER") is None
+DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
 
 # Renderのホスト名を許可（DEBUG=False で必須）
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
@@ -74,6 +74,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_URL = "/static/"
+STATIC_ROOT = str(BASE_DIR / "staticfiles")  # ★常に設定（strにする）
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

@@ -7,7 +7,7 @@ channels==4.2.0
 channels_redis==4.2.1
 charset-normalizer==3.4.0
 click==8.1.7
-dash==2.18.2
+dash==2.12.1
 dash-bootstrap-components==1.6.0
 dash-core-components==2.0.0
 dash-html-components==2.0.0

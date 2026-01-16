@@ -275,7 +275,7 @@ from dash.dependencies import Input, Output
 from wordcloud import WordCloud
 
 
-def wordcloud_png_base64(freq: dict, width=900, height=600) -> str:
+def wordcloud_png_base64(freq: dict, width=900, height=520) -> str:
     """
     freq: {"PROACTIVE": 50, "COLLABORATION": 40, ...} のような頻度辞書
     return: data URI に使える base64 文字列

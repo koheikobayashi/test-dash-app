@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-insecure-secret")
 
 # Render上では DEBUG=False
-DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
+DEBUG = os.environ.get("RENDER") is None
 
 # Renderのホスト名を許可（DEBUG=False で必須）
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
@@ -22,8 +22,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "django_plotly_dash.apps.DjangoPlotlyDashConfig",
-    "dpd_static_support",
 ]
 
 MIDDLEWARE = [
@@ -35,10 +33,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-    "django_plotly_dash.middleware.BaseMiddleware",
-    "django_plotly_dash.middleware.ExternalRedirectionMiddleware",
-
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -73,10 +67,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
-STATIC_URL = "/static/"
 
-# collectstatic 用の出力先（常に設定）
-STATIC_ROOT = str(BASE_DIR / "staticfiles")
-
-# WhiteNoise を使うなら（そのままでOK）
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

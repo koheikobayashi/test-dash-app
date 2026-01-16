@@ -7,10 +7,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-insecure-secret")
 
 # Render上では DEBUG=False
-DEBUG = os.environ.get("RENDER") is None
+DEBUG = True  # 開発中はTrueに、本番環境ではFalseに設定
 
-# Renderのホスト名を許可（DEBUG=False で必須）
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 render_host = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
 if render_host:
     ALLOWED_HOSTS.append(render_host)

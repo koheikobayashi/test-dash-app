@@ -292,6 +292,65 @@ app5.layout = html.Div(
     style={"width": "200px", "background": "white"},
 )
 
+
+def make_ring_figure(value: int, color="#f59e0b", rest_color="#fde68a"):
+    value = max(0, min(100, int(value)))
+
+    fig = go.Figure(
+        data=[
+            go.Pie(
+                values=[value, 100 - value],
+                hole=0.86,                 # リングを細めに（画像っぽく）
+                sort=False,
+                direction="clockwise",
+                rotation=270,              # 下あたりから始まる雰囲気に寄せる
+                textinfo="none",
+                hoverinfo="skip",
+                marker=dict(
+                    colors=[color, rest_color],
+                    line=dict(color="white", width=2),
+                ),
+                showlegend=False,
+            )
+        ]
+    )
+
+    fig.update_layout(
+        margin=dict(l=0, r=0, t=0, b=0),
+        paper_bgcolor="white",
+        plot_bgcolor="white",
+        height=160,
+        width=200,
+        annotations=[
+            dict(
+                text=f"<b>{value}%</b>",
+                x=0.5, y=0.5,
+                showarrow=False,
+                font=dict(size=44, color="#111827"),
+            )
+        ],
+    )
+    return fig
+
+app7 = DjangoDash("ExecutionSpeed", external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+app7.layout = html.Div(
+    children=[
+        dcc.Graph(
+            id="innovation-gauge",
+            config={"displayModeBar": False},
+            figure=make_ring_figure(75),     # ← 画像は 75%
+            style={"height": "160px"},
+        ),
+    ],
+    style={
+        "width": "200px",
+        "background": "white",
+        "display": "grid",
+        "placeItems": "center",
+    },
+)
+
 # apps/wordcloud_dash.py など（Django起動時にimportされる場所）
 import base64
 from io import BytesIO

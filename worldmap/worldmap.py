@@ -14,7 +14,7 @@ import numpy as np
 time = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 heartbeat = [80, 85, 70, 75, 90, 95, 100, 110, 105]
 
-app1 = DjangoDash('WorldMap', external_stylesheets=[dbc.themes.BOOTSTRAP],serve_locally=False)
+app1 = DjangoDash('WorldMap', external_scripts=['https://cdn.plot.ly/plotly-basic-2.18.2.min.js'])
 
 # 例: time が [55, 57, 61, 68, 77, 79, 82, 85] などの想定
 # もし time が datetime なら、画像風の “%ラベル” には合わないので別調整が必要
@@ -125,7 +125,7 @@ def make_ring_figure_blue(value: int, color="#1d4ed8", rest_color="#7ec8d6"):
     )
     return fig
 
-app5 = DjangoDash("InnovationGauge", external_stylesheets=[dbc.themes.BOOTSTRAP],serve_locally=False)
+app5 = DjangoDash("InnovationGauge", external_scripts=['https://cdn.plot.ly/plotly-basic-2.18.2.min.js'])
 
 app5.layout = html.Div(
     children=[
@@ -183,7 +183,7 @@ def make_ring_figure(value: int, color="#f59e0b", rest_color="#fde68a"):
     )
     return fig
 
-app7 = DjangoDash("ExecutionSpeed", external_stylesheets=[dbc.themes.BOOTSTRAP],serve_locally=False)
+app7 = DjangoDash("ExecutionSpeed", external_scripts=['https://cdn.plot.ly/plotly-basic-2.18.2.min.js'])
 
 app7.layout = html.Div(
     children=[
@@ -243,7 +243,7 @@ def make_ring_figure_green(value: int, color="#16a34a", rest_color="#9bd5d6"):
     )
     return fig
 
-app8 = DjangoDash("CustomerGauge", external_stylesheets=[dbc.themes.BOOTSTRAP],serve_locally=False)
+app8 = DjangoDash("CustomerGauge", external_scripts=['https://cdn.plot.ly/plotly-basic-2.18.2.min.js'])
 
 app8.layout = html.Div(
     children=[

@@ -36,15 +36,14 @@ fig.add_trace(
 )
 
 fig.update_layout(
-    # 余白・背景
-    margin=dict(l=50, r=20, t=10, b=40),
+    autosize=True,
+    margin=dict(l=28, r=10, t=8, b=26),   # ← ここを小さめに
     paper_bgcolor="white",
     plot_bgcolor="white",
     showlegend=False,
-
-    # グラフの高さ（カードに合わせやすい）
-    height=260,
+    height=260,                           # PC標準（後でCSSでスマホ時に上書きも可）
 )
+
 
 # 軸スタイル（画像っぽく薄いグリッド）
 fig.update_xaxes(
@@ -80,9 +79,9 @@ app1.layout = html.Div(
     children=[
         dcc.Graph(
             id="line-plot",
-            config={"displayModeBar": False},
+            config={"displayModeBar": False, "responsive": True},
             figure=fig,
-            style={"width": "100%"},
+            style={"width": "100%", "height": "100%"},
         )
     ]
 )

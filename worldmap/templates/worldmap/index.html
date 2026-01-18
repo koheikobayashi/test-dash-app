@@ -66,8 +66,9 @@
 
             <!-- Line chart -->
             <div class="panel panel--chart">
-              <div class="embed embed--line">
-                {% plotly_app name="WorldMap" ratio=0.42 %}
+              <div class="dpd-embed dpd-embed--line" data-dpd-loader>
+                {% plotly_app name="WorldMap" ratio=1.0 %}
+                <div class="dpd-loader" aria-hidden="true"></div>
               </div>
               <div class="axisLabel">% LAST 6 MONTHS</div>
             </div>
@@ -75,22 +76,25 @@
             <!-- KPI rings -->
             <div class="kpis">
               <div class="kpi">
-                <div class="embed embed--ring">
+                <div class="dpd-embed dpd-embed--ring" data-dpd-loader>
                   {% plotly_app name="InnovationGauge" ratio=1.0 %}
+                  <div class="dpd-loader" aria-hidden="true"></div>
                 </div>
                 <div class="kpi__label">INNOVATION</div>
               </div>
 
               <div class="kpi">
-                <div class="embed embed--ring">
+                <div class="dpd-embed dpd-embed--ring" data-dpd-loader>
                   {% plotly_app name="CustomerGauge" ratio=1.0 %}
+                  <div class="dpd-loader" aria-hidden="true"></div>
                 </div>
                 <div class="kpi__label">CUSTOMER FIRST</div>
               </div>
 
               <div class="kpi">
-                <div class="embed embed--ring">
+                <div class="dpd-embed dpd-embed--ring" data-dpd-loader>
                   {% plotly_app name="ExecutionSpeed" ratio=1.0 %}
+                  <div class="dpd-loader" aria-hidden="true"></div>
                 </div>
                 <div class="kpi__label">EXECUTION SPEED</div>
               </div>
@@ -145,8 +149,9 @@
             </div>
             <div class="card__body">
               <div class="panel panel--cloud">
-                <div class="embed embed--cloud">
+                <div class="dpd-embed dpd-embed--cloud" data-dpd-loader>
                   {% plotly_app name="FeedbackWordCloud" ratio=0.65 %}
+                  <div class="dpd-loader" aria-hidden="true"></div>
                 </div>
               </div>
             </div>
@@ -177,9 +182,19 @@
 
                 <div class="progressRow" aria-label="Score progress">
                   <span class="flame">🔥</span>
-                  <div class="embed embed--progress">
-                    {% plotly_app name="ProgressBar" ratio=0.08 %}
+                  <!-- <div class="embed embed--progress">
+                    {% plotly_app name="ProgressBar" ratio=1%}
+                  </div> -->
+                  <div
+                    class="bar"
+                    role="progressbar"
+                    aria-valuenow="85"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  >
+                    <i></i>
                   </div>
+                  <div class="pct-big">85%</div>
                   <span class="flame">🔥</span>
                 </div>
               </div>

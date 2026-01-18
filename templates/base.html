@@ -703,17 +703,25 @@
         border-radius: 14px;
       }
 
-      /* スピナー本体 */
+      /* スピナー本体：灰色リングなし（青い弧だけ） */
       .dpd-loader::after {
         content: "";
         width: 44px;
         height: 44px;
         border-radius: 999px;
-        border: 4px solid rgba(15, 23, 42, 0.14);
+
+        /* ★灰色のベースを消す */
+        border: 4px solid transparent;
+
+        /* ★見せたい部分だけ色を付ける */
         border-top-color: #0ea5e9;
+
         animation: dpdspin 0.9s linear infinite;
-        box-shadow: 0 12px 26px rgba(2, 8, 23, 0.1);
+
+        /* 必要なら影も消せます */
+        box-shadow: none;
       }
+
       @keyframes dpdspin {
         to {
           transform: rotate(360deg);
@@ -739,7 +747,7 @@
       }
       @media (max-width: 520px) {
         .dpd-embed--line {
-          height: 320px;
+          height: 260px;
         }
       }
     </style>

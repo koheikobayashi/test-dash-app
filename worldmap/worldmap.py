@@ -10,70 +10,11 @@ import numpy as np
 # （データ準備部分は元のコードを使用します）
 # ここではサンプルデータを使用しています
 
-def enable_loading_animation(app, accent="#0ea5e9"):
-    app.index_string = f"""
-<!DOCTYPE html>
-<html>
-  <head>
-    {{%metas%}}
-    <title>{{%title%}}</title>
-    {{%favicon%}}
-    {{%css%}}
-    <style>
-      /* Dashのloading要素（表記揺れ全部に対応） */
-      #_dash-loading, ._dash-loading,
-      #_dash_loading, ._dash_loading {{
-        position: fixed;
-        inset: 0;
-        display: grid !important;
-        place-items: center;
-        background: rgba(255,255,255,0.70);
-        backdrop-filter: blur(6px);
-        z-index: 9999;
-
-        /* 文字は見せない */
-        color: transparent !important;
-        font-size: 0 !important;
-        line-height: 0 !important;
-        user-select: none !important;
-        overflow: hidden !important;
-      }}
-
-      /* スピナー（リング回転） */
-      #_dash-loading::after, ._dash-loading::after,
-      #_dash_loading::after, ._dash_loading::after {{
-        content: "";
-        width: 44px;
-        height: 44px;
-        border-radius: 999px;
-        border: 4px solid rgba(15, 23, 42, 0.14);
-        border-top-color: {accent};
-        animation: dashspin 0.9s linear infinite;
-        box-shadow: 0 12px 26px rgba(2,8,23,0.10);
-      }}
-
-      @keyframes dashspin {{ to {{ transform: rotate(360deg); }} }}
-    </style>
-  </head>
-  <body>
-    {{%app_entry%}}
-    <footer>
-      {{%config%}}
-      {{%scripts%}}
-      {{%renderer%}}
-    </footer>
-  </body>
-</html>
-"""
-
-
-
 # サンプルデータ
 time = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 heartbeat = [80, 85, 70, 75, 90, 95, 100, 110, 105]
 
 app1 = DjangoDash('WorldMap', external_scripts=['https://cdn.plot.ly/plotly-basic-2.18.2.min.js'])
-enable_loading_animation(app1) 
 # 例: time が [55, 57, 61, 68, 77, 79, 82, 85] などの想定
 # もし time が datetime なら、画像風の “%ラベル” には合わないので別調整が必要
 
